@@ -1,0 +1,17 @@
+
+package pl.swapper;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+
+public class InventoryOffhandSlotSwapper implements ClientModInitializer {
+    @Override
+    public void onInitializeClient() {
+        SwapKeybind.register();
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (SwapKeybind.SWAP_KEY.wasPressed()) {
+                SwapLogic.swap(client.player);
+            }
+        });
+    }
+}
